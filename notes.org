@@ -1,0 +1,134 @@
+LD 45 - Start with Nothing
+
+start with no ability and no equipment
+
+obtain abilities and equipments somehow as game progresses
+
+game world react to what abilities and equipments you posseess somwhow
+
+kill enemy to get equipment
+
+learn ability from something
+
+discover ability from something
+
+find equipments in treasure box
+
+go thru 4 stages
+
+stages themed based on ability/equipment possessed
+
+enemies also themed, enemy theme randomized for each stage
+
+stage theme and enemy theme can have synergy
+
+some ability/equipment can deal with theme better some worse
+
+pick an item from beginning zone
+
+stage one gets you an ability
+
+stage two gets you an upgrade to ability
+
+stage three gets you an upgrade to equipment
+
+stage 4 final boss def determined by your ability/equipment
+
+WASD Movement
+
+LMB
+| Equipment   | Attack Value | Attack Range | Attack Speed | Notes                                    | Upgrade 1 | Upgrade 2 | stage augment |
+| nothing     |            1 | melee        |            1 | single enemy based on direction faced    |           |           |               |
+| sword       |            3 | melee        |            2 | enemies in arc based on direction faced  |           |           |               |
+| gun         |            2 | range        |            2 | it's a gun                               |           |           |               |
+| power glove |            4 | melee/range  |            3 | dash for a distance hit everyone in path |           |           |               |
+
+RMB
+| Ability          | Description | Upgrade | stage augment |
+| invulnerable     |             |         |               |
+| aoe dot on stage |             |         |               |
+| mag enemy        |             |         |               |
+|                  |             |         |               |
+| fire walk        |             |         |               |
+| freeze enemy     |             |         |               |
+| dot on enemy     |             |         |               |
+
+need 5 themes
+| Stage Theme   | Description                           |
+| infinite wave | need to do something to stop the wave |
+|               |                                       |
+
+| Enemy Theme | Description |
+| melee       |             |
+| ranged      |             |
+| melee aoe   |             |
+|             |             |
+
+** stage/boss theme response
+
+   each pickup of weapon/ability/upgrade will trigger a theme change in the next stage, and also alter the boss
+
+   stage theme alter will be done in a way where the new weapon/ability/upgrade is designed to handle
+
+   i.e pick a sword, stage will have packed enemies that also does melee
+
+   boss will be the same, and it will also get a alteration that's a disadvantage for the weapon/ability/upgrade
+
+   i.e same sword pick up will make the boss ... (to be determind)
+
+collision signal used to see if "self" got hit and handle appropriately, should emit hit signal
+
+* DONE Stage Chnage Signal
+  CLOSED: [2019-10-05 Sat 11:32]
+
+  Player satified requirement to enable transision point
+
+  Player walk to transision point
+
+  Transision point detect body entered
+
+  Transision emit transision_initiated signal
+
+  World listen for transision_initiated signal
+
+  World initiate stage transision
+
+* DONE Item Pickup Signal
+  CLOSED: [2019-10-05 Sat 10:39]
+
+  Player walk over to pickable
+
+  Pickable detect body entered
+
+  Pickable emit picked_up signal
+
+  World listen for picked_up signal
+
+  World give item to player
+
+* TODO Camera work
+  
+  starting zone should fit in one screen, really just need to worry about the later stages
+  
+
+* TODO Ability Learned Signal
+
+* TODO Item Upgraded Signal
+
+* TODO Ability Upgraded Signal
+
+* TODO Enemy Pathfinding
+
+* TODO Stage Themes
+
+* TODO Enemy Themes
+
+* TODO Starting Zone Layout
+
+* TODO Stage 1 Layout
+
+* TODO Stage 2 Layout
+
+* TODO Stage 3 Layout
+
+* TODO Stage 4 Layout

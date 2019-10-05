@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Stage1.gd" type="Script" id=1]
+[ext_resource path="res://Target.tscn" type="PackedScene" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 65.4584, 40.6934 )
+
+[node name="Stage1" type="Node2D"]
+script = ExtResource( 1 )
+Enemy = ExtResource( 2 )
+
+[node name="PlayerSpawn" type="Position2D" parent="."]
+position = Vector2( 524.017, 529.861 )
+
+[node name="EnemySpawns" type="Node2D" parent="."]
+
+[node name="EnemySpawn" type="Position2D" parent="EnemySpawns"]
+position = Vector2( 290.255, 305.839 )
+
+[node name="EnemySpawn2" type="Position2D" parent="EnemySpawns"]
+position = Vector2( 510.381, 229.866 )
+
+[node name="EnemySpawn3" type="Position2D" parent="EnemySpawns"]
+position = Vector2( 808.428, 286.359 )
+
+[node name="StageTransition" type="Area2D" parent="."]
+visible = false
+position = Vector2( 520.427, 30.0081 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StageTransition"]
+shape = SubResource( 1 )
+disabled = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 407.049, 420.875 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource( 2 )
+[connection signal="body_entered" from="StageTransition" to="." method="_on_StageTransition_body_entered"]
