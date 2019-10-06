@@ -6,11 +6,12 @@ signal died
 var health
 
 var target
-var speed = 300
-var attack_range = 80
-var attack_range_buffer = 0.9 # attack_range is the max range, 
+var speed = 150
+var attack_range = 400
+var attack_range_buffer = 0.8 # attack_range is the max range, 
 var attack_state = "idle"
 
+var ink_bullet_scene  = preload("res://InkBullet.tscn")
 
 func _ready():
 	health = 2
@@ -21,7 +22,6 @@ func _process(delta):
 	
 	if target && target.name == "Player":
 		var distance = (target.position - position)
-		
 		if distance.length() > (attack_range * attack_range_buffer):
 			var velocity = distance.normalized() * speed
 			move_and_slide(velocity)
@@ -29,6 +29,10 @@ func _process(delta):
 		if distance.length() <= (attack_range):
 			if attack_state == "idle":
 				attack_state = "attacked"
+				var bullet = ink_bullet_scene.instance()
+				bullet.set_position(position)
+				bullet.set_heading(distance)
+				get_parent().add_child(bullet)
 				$AttackCooldownTimer.start()
 	
 	if health <= 0:
@@ -47,3 +51,7 @@ func _ouch():
 
 func target_player(player):
 	target = player
+
+
+func _on_AttackCooldownTimer_timeout():
+	attack_state = "idle"

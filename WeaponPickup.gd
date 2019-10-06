@@ -1,8 +1,8 @@
 extends Area2D
 
-signal picked_up(item)
+signal picked_up
 
-const NAME = "Weapon"
+const NAME = "Sword"
 
 
 func _ready():
@@ -11,7 +11,5 @@ func _ready():
 
 func _on_WeaponPickup_body_entered(body):
 	if body.name == "Player":
-		hide()
-		emit_signal("picked_up", self)
-		$CollisionShape2D.set_deferred("disabled", true)
+		emit_signal("picked_up")
 	

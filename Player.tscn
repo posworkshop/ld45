@@ -1,24 +1,66 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://UnarmedAttack.tscn" type="PackedScene" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://assets/player_left1.png" type="Texture" id=3]
+[ext_resource path="res://assets/player_left2.png" type="Texture" id=4]
+[ext_resource path="res://assets/player_left3.png" type="Texture" id=5]
+[ext_resource path="res://assets/player_right1.png" type="Texture" id=6]
+[ext_resource path="res://assets/player_right2.png" type="Texture" id=7]
+[ext_resource path="res://assets/player_right3.png" type="Texture" id=8]
+[ext_resource path="res://assets/player_front1.png" type="Texture" id=9]
+[ext_resource path="res://assets/player_front2.png" type="Texture" id=10]
+[ext_resource path="res://assets/player_front3.png" type="Texture" id=11]
+[ext_resource path="res://assets/player_back1.png" type="Texture" id=12]
+[ext_resource path="res://assets/player_back2.png" type="Texture" id=13]
+[ext_resource path="res://assets/player_back3.png" type="Texture" id=14]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 31.2148
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "left",
+"speed": 2.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "right",
+"speed": 2.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "back",
+"speed": 2.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 23.1906
+height = 13.7432
 
 [node name="Player" type="KinematicBody2D"]
+collision_mask = 67
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
 UnarmedAttack = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 3 )
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 2, 2 )
+frames = SubResource( 1 )
+frame = 2
+playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+visible = false
+shape = SubResource( 2 )
 
 [node name="WeaponAnchorPoint" type="Position2D" parent="."]
-position = Vector2( 13.8019, 15.4582 )
+position = Vector2( 29, 0 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false

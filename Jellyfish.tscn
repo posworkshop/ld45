@@ -4,11 +4,11 @@
 [ext_resource path="res://assets/jellyfish.png" type="Texture" id=2]
 [ext_resource path="res://assets/lightning.png" type="Texture" id=3]
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 27.743
 height = 8.77661
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=2]
 resource_name = "ShockAttack"
 length = 2.0
 tracks/0/type = "value"
@@ -56,21 +56,20 @@ _data = [ Vector2( 0, 4.40002 ), 0.0, 489.355, 0, 0, Vector2( 0.305479, 36.08 ),
 [sub_resource type="CurveTexture" id=8]
 curve = SubResource( 7 )
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="ParticlesMaterial" id=9]
 emission_shape = 2
 emission_box_extents = Vector3( 1, 1, 1 )
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 200.0
-angular_velocity = 0.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 linear_accel = -10.0
 linear_accel_curve = SubResource( 8 )
 scale = 4.0
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=6]
 
 [node name="Jellyfish" type="KinematicBody2D"]
 collision_layer = 2
@@ -84,7 +83,7 @@ texture = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 rotation = -1.5708
-shape = SubResource( 4 )
+shape = SubResource( 1 )
 
 [node name="AttackCooldownTimer" type="Timer" parent="."]
 wait_time = 1.2
@@ -92,7 +91,7 @@ wait_time = 1.2
 [node name="ShockAttack" type="Node2D" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ShockAttack"]
-anims/ShockAttack = SubResource( 9 )
+anims/ShockAttack = SubResource( 2 )
 
 [node name="Particles2D" type="Particles2D" parent="ShockAttack"]
 scale = Vector2( 0.5, 0.5 )
@@ -100,14 +99,15 @@ emitting = false
 amount = 80
 one_shot = true
 explosiveness = 0.5
-process_material = SubResource( 6 )
+process_material = SubResource( 9 )
 texture = ExtResource( 3 )
 
 [node name="Area2D" type="Area2D" parent="ShockAttack"]
 scale = Vector2( 10, 10 )
+collision_layer = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShockAttack/Area2D"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 disabled = true
 [connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_AttackCooldownTimer_timeout"]
 [connection signal="body_entered" from="ShockAttack/Area2D" to="." method="_on_Area2D_body_entered"]

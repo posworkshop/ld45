@@ -67,13 +67,14 @@ shape = SubResource( 1 )
 [node name="TongueAttack" type="Node2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="TongueAttack"]
+visible = false
 position = Vector2( 0.0104084, 0 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 3 )
 offset = Vector2( 0.995665, 0.00303698 )
 
 [node name="Area2D" type="Area2D" parent="TongueAttack/Sprite"]
-collision_layer = 8
+collision_layer = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TongueAttack/Sprite/Area2D"]
 position = Vector2( 1, 0 )

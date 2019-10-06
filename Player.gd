@@ -15,9 +15,6 @@ func _ready():
 
 
 func _physics_process(delta):
-	if equipped_weapon:
-		var direction = get_viewport().get_mouse_position() - (position + $WeaponAnchorPoint.position)
-		equipped_weapon.change_direction(direction.angle())
 		
 	var velocity = Vector2()
 	if Input.is_action_pressed("movement_left"):
@@ -36,6 +33,18 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("weapon_attack"):
 		_attack()
+	
+	var facing = (get_viewport().get_mouse_position() - (get_viewport_rect().size / 2)).normalized()
+	if facing.y < 0:
+		$AnimatedSprite.animation = "back"
+	elif facing.x >= 0.3:
+		$AnimatedSprite.animation = "right"
+		pass
+	elif facing.x <= -0.3:
+		$AnimatedSprite.animation = "left"
+		pass
+	else:
+		$AnimatedSprite.animation = "default"
 
 
 func pickup_weapon(item):
@@ -49,6 +58,7 @@ func pickup_weapon(item):
 
 
 func _attack():
+	
 	if equipped_weapon:
 		equipped_weapon.attack()
 	else:
@@ -58,3 +68,27 @@ func _attack():
 func hit():
 	print_debug("ahh")
 	emit_signal("got_hit")
+	
+
+func set_sword_to_deflect():
+	if equipped_weapon.name == "Sword":
+		equipped_weapon.is_deflecting = true
+		equipped_weapon.is_enlarged = false
+
+func set_sword_to_enlarge():
+	if equipped_weapon.name == "Sword":
+		equipped_weapon.is_enlarged = true
+		equipped_weapon.is_deflecting = false
+
+
+func set_gun_to_spread_shot():
+	if equipped_weapon.name == "Gun":
+		equipped_weapon.is_spread_shot = true
+		equipped_weapon.is_plant_explosive = false
+
+
+func set_gun_to_explosive():
+	if equipped_weapon.name == "Gun":
+		equipped_weapon.is_plant_explosive = true
+		equipped_weapon.is_spread_shot = false
+
