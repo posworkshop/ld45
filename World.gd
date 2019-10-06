@@ -1,10 +1,10 @@
 extends Node2D
 
-signal upgrade_gun_with_spread_shot
-signal upgrade_gun_with_timed_explosive
-
-signal upgrade_sword_with_deflect
-signal upgrade_sword_with_enlarge
+#signal upgrade_gun_with_spread_shot
+#signal upgrade_gun_with_timed_explosive
+#
+#signal upgrade_sword_with_deflect
+#signal upgrade_sword_with_enlarge
 
 signal weapon_picked_up
 var weapon_picked_up_signal_fired = false
