@@ -2,7 +2,9 @@ extends Node2D
 
 signal next_stage
 
-export (PackedScene) var Enemy
+var frog_scene = preload("res://Frog.tscn")
+var octo_scene = preload("res://Octo.tscn")
+var jellyfish_scene = preload("res://Jellyfish.tscn")
 
 var enemy_count = 0
 
@@ -12,7 +14,7 @@ func _ready():
 	var player = get_parent().get_node("Player")
 	
 	for spawn in enemy_spawns:
-		var enemy = Enemy.instance()
+		var enemy = jellyfish_scene.instance()
 		enemy.position = spawn.position
 		enemy.connect("died", self, "_on_Enemy_died")
 		enemy.target_player(player)

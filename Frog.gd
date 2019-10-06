@@ -29,8 +29,8 @@ func _process(delta):
 		if distance.length() <= (attack_range):
 			if attack_state == "idle":
 				attack_state = "attacked"
-#				$TongueAttack.rotation = distance.angle()
-#				$TongueAttack/AnimationPlayer.play("TongueAttack")
+				$TongueAttack.rotation = distance.angle()
+				$TongueAttack/AnimationPlayer.play("TongueAttack")
 				$AttackCooldownTimer.start()
 	
 	if health <= 0:
@@ -53,3 +53,8 @@ func target_player(player):
 
 func _on_AttackCooldownTimer_timeout():
 	attack_state = "idle"
+
+
+func _on_Area2D_body_entered(body):
+	if body.name == "Player":
+		body.hit()

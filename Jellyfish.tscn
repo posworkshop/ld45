@@ -1,0 +1,113 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Jellyfish.gd" type="Script" id=1]
+[ext_resource path="res://assets/jellyfish.png" type="Texture" id=2]
+[ext_resource path="res://assets/lightning.png" type="Texture" id=3]
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 27.743
+height = 8.77661
+
+[sub_resource type="Animation" id=9]
+resource_name = "ShockAttack"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Particles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Area2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 10, 10 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Curve" id=7]
+min_value = -348.05
+max_value = 133.37
+_data = [ Vector2( 0, 4.40002 ), 0.0, 489.355, 0, 0, Vector2( 0.305479, 36.08 ), 0.0, 0.0, 0, 0, Vector2( 0.675696, 46.233 ), -63.2956, -63.2956, 0, 0, Vector2( 1, -165.592 ), -1430.94, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=8]
+curve = SubResource( 7 )
+
+[sub_resource type="ParticlesMaterial" id=6]
+emission_shape = 2
+emission_box_extents = Vector3( 1, 1, 1 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 200.0
+angular_velocity = 0.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = -10.0
+linear_accel_curve = SubResource( 8 )
+scale = 4.0
+
+[sub_resource type="CircleShape2D" id=5]
+
+[node name="Jellyfish" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 4, 4 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+rotation = -1.5708
+shape = SubResource( 4 )
+
+[node name="AttackCooldownTimer" type="Timer" parent="."]
+wait_time = 1.2
+
+[node name="ShockAttack" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ShockAttack"]
+anims/ShockAttack = SubResource( 9 )
+
+[node name="Particles2D" type="Particles2D" parent="ShockAttack"]
+scale = Vector2( 0.5, 0.5 )
+emitting = false
+amount = 80
+one_shot = true
+explosiveness = 0.5
+process_material = SubResource( 6 )
+texture = ExtResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="ShockAttack"]
+scale = Vector2( 10, 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShockAttack/Area2D"]
+shape = SubResource( 5 )
+disabled = true
+[connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_AttackCooldownTimer_timeout"]
+[connection signal="body_entered" from="ShockAttack/Area2D" to="." method="_on_Area2D_body_entered"]

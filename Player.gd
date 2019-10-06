@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal got_hit
+
 var speed = 300
 var equipped_weapon
 var unarmed_attack
@@ -52,3 +54,7 @@ func _attack():
 	else:
 		var target_direction = (get_viewport().get_mouse_position() - position).normalized()
 		unarmed_attack.attack(target_direction)
+
+func hit():
+	print_debug("ahh")
+	emit_signal("got_hit")

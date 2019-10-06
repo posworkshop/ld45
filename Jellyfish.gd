@@ -6,9 +6,9 @@ signal died
 var health
 
 var target
-var speed = 300
-var attack_range = 80
-var attack_range_buffer = 0.9 # attack_range is the max range, 
+var speed = 200
+var attack_range = 130
+var attack_range_buffer = 0.65 # attack_range is the max range, 
 var attack_state = "idle"
 
 
@@ -29,8 +29,7 @@ func _process(delta):
 		if distance.length() <= (attack_range):
 			if attack_state == "idle":
 				attack_state = "attacked"
-#				$TongueAttack.rotation = distance.angle()
-#				$TongueAttack/AnimationPlayer.play("TongueAttack")
+				$ShockAttack/AnimationPlayer.play("ShockAttack")
 				$AttackCooldownTimer.start()
 	
 	if health <= 0:
@@ -53,3 +52,8 @@ func target_player(player):
 
 func _on_AttackCooldownTimer_timeout():
 	attack_state = "idle"
+
+
+func _on_Area2D_body_entered(body):
+	if body.name == "Player":
+		body.hit()
