@@ -21,7 +21,13 @@ position = Vector2( 144.842, 99.0803 )
 position = Vector2( 209.852, 374.225 )
 
 [node name="EnemySpawn3" type="Position2D" parent="EnemySpawns"]
-position = Vector2( 895.409, 149.397 )
+position = Vector2( 869.562, 142.595 )
+
+[node name="EnemySpawn4" type="Position2D" parent="EnemySpawns"]
+position = Vector2( 964.788, 334.408 )
+
+[node name="EnemySpawn5" type="Position2D" parent="EnemySpawns"]
+position = Vector2( 545.793, -16.5687 )
 
 [node name="StageTransition" type="Area2D" parent="."]
 visible = false

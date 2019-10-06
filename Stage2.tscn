@@ -35,15 +35,14 @@ func _ready():
 func _on_Enemy_died():
 	enemy_count -= 1
 	if enemy_count <= 0:
-		$StageTransition/CollisionShape2D.disabled = false
-		$StageTransition.show()
-
-
-func _on_StageTransition_body_entered(body):
-	if body.name == \"Player\":
 		emit_signal(\"next_stage\")
-		$StageTransition.hide()
-		$StageTransition/CollisionShape2D.set_deferred(\"disabled\", true)
+
+
+#func _on_StageTransition_body_entered(body):
+#	if body.name == \"Player\":
+#		emit_signal(\"next_stage\")
+#		$StageTransition.hide()
+#		$StageTransition/CollisionShape2D.set_deferred(\"disabled\", true)
 "
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -66,6 +65,7 @@ position = Vector2( 209.852, 374.225 )
 position = Vector2( 895.409, 149.397 )
 
 [node name="StageTransition" type="Area2D" parent="."]
+visible = false
 position = Vector2( 520.427, 30.0081 )
 __meta__ = {
 "_edit_group_": true

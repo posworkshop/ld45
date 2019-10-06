@@ -1,9 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://WeaponPickup.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://assets/sword.png" type="Texture" id=2]
+[ext_resource path="res://assets/Lato-Regular.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 46.8846, 10 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
 
 [node name="WeaponPickup" type="Area2D"]
 collision_layer = 64
@@ -13,8 +21,17 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 3, 3 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -46.4152
+margin_top = 12.8491
+margin_right = 43.5848
+margin_bottom = 51.8491
+custom_fonts/font = SubResource( 2 )
+text = "Sword"
 [connection signal="body_entered" from="." to="." method="_on_WeaponPickup_body_entered"]

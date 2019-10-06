@@ -1,10 +1,13 @@
 extends KinematicBody2D
 
 signal got_hit
+signal died
 
 var speed = 300
 var equipped_weapon
 var unarmed_attack
+var health = 10
+var dead = false
 
 export (PackedScene) var UnarmedAttack
 
@@ -13,38 +16,41 @@ func _ready():
 	unarmed_attack = UnarmedAttack.instance()
 	add_child(unarmed_attack)
 
+func reset_health():
+	health = 10
+	$Camera2D/HUD/PlayerHealthLabel.text = "HEALTH: " + str(health)
 
 func _physics_process(delta):
-		
-	var velocity = Vector2()
-	if Input.is_action_pressed("movement_left"):
-		velocity.x -= 1
-	if Input.is_action_pressed("movement_right"):
-		velocity.x += 1
-	if Input.is_action_pressed("movement_up"):
-		velocity.y -= 1
-	if Input.is_action_pressed("movement_down"):
-		velocity.y += 1
-
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
-		
-	move_and_slide(velocity)
+	if !dead:
+		var velocity = Vector2()
+		if Input.is_action_pressed("movement_left"):
+			velocity.x -= 1
+		if Input.is_action_pressed("movement_right"):
+			velocity.x += 1
+		if Input.is_action_pressed("movement_up"):
+			velocity.y -= 1
+		if Input.is_action_pressed("movement_down"):
+			velocity.y += 1
 	
-	if Input.is_action_just_pressed("weapon_attack"):
-		_attack()
-	
-	var facing = (get_viewport().get_mouse_position() - (get_viewport_rect().size / 2)).normalized()
-	if facing.y < 0:
-		$AnimatedSprite.animation = "back"
-	elif facing.x >= 0.3:
-		$AnimatedSprite.animation = "right"
-		pass
-	elif facing.x <= -0.3:
-		$AnimatedSprite.animation = "left"
-		pass
-	else:
-		$AnimatedSprite.animation = "default"
+		if velocity.length() > 0:
+			velocity = velocity.normalized() * speed
+			
+		move_and_slide(velocity)
+		
+		if Input.is_action_just_pressed("weapon_attack"):
+			_attack()
+		
+		var facing = (get_viewport().get_mouse_position() - (get_viewport_rect().size / 2)).normalized()
+		if facing.y < 0:
+			$AnimatedSprite.animation = "back"
+		elif facing.x >= 0.3:
+			$AnimatedSprite.animation = "right"
+			pass
+		elif facing.x <= -0.3:
+			$AnimatedSprite.animation = "left"
+			pass
+		else:
+			$AnimatedSprite.animation = "default"
 
 
 func pickup_weapon(item):
@@ -66,9 +72,13 @@ func _attack():
 		unarmed_attack.attack(target_direction)
 
 func hit():
-	print_debug("ahh")
 	emit_signal("got_hit")
-	
+	health -= 1
+	$Camera2D/HUD/PlayerHealthLabel.text = "HEALTH: " + str(health)
+	if health <= 0:
+		dead = true
+		
+		emit_signal("died")
 
 func set_sword_to_deflect():
 	if equipped_weapon.name == "Sword":

@@ -6,6 +6,9 @@ signal upgrade_gun_with_timed_explosive
 signal upgrade_sword_with_deflect
 signal upgrade_sword_with_enlarge
 
+signal weapon_picked_up
+var weapon_picked_up_signal_fired = false
+
 var starting_zone = preload("res://StartingZone.tscn")
 var upgrade_zone = preload("res://UpgradeZone.tscn")
 var stage_one = preload("res://Stage1.tscn")
@@ -29,6 +32,7 @@ var go_to_divided_stage_two = false
 func _ready():
 	current_zone = starting_zone.instance()
 	current_zone.connect("next_stage", self, "_on_StartingZone_next_stage")
+	connect("weapon_picked_up", current_zone, "_on_World_weapon_picked")
 	add_child(current_zone)
 	$Player.position = current_zone.get_node("PlayerSpawn").position
 	$WeaponPickup.position = current_zone.get_node("ItemSpawn1").position
@@ -75,8 +79,9 @@ func _on_UpgradeZone_next_stage():
 	else:
 		current_zone = stage_two.instance()
 
-	current_zone.connect("next_stage", self, "_on_UpgradeZone_next_stage")
+	current_zone.connect("next_stage", self, "_on_stage_two_cleared")
 	call_deferred("add_child", current_zone)
+	$Player.reset_health()
 	$Player.position = current_zone.get_node("PlayerSpawn").position
 	$SpreadShotPickup/CollisionShape2D.set_deferred("disabled", true)
 	$SpreadShotPickup.hide()
@@ -86,15 +91,20 @@ func _on_UpgradeZone_next_stage():
 	$DeflectPickup.hide()
 	$EnlargePickup/CollisionShape2D.set_deferred("disabled", true)
 	$EnlargePickup.hide()
+	
 		
 		
 func _on_WeaponPickup_picked_up():
+	if !weapon_picked_up_signal_fired:
+		emit_signal("weapon_picked_up")
 	picked_gun = false
 	picked_sword = true
 	$Player.pickup_weapon(sword)
 
 
 func _on_GunPickup_picked_up():
+	if !weapon_picked_up_signal_fired:
+		emit_signal("weapon_picked_up")
 	picked_gun = true
 	picked_sword = false
 	$Player.pickup_weapon(gun)
@@ -132,3 +142,9 @@ func _on_ExplosivePickup_picked_up():
 	$Player.set_gun_to_explosive()
 
 
+func _on_Player_died():
+	$Player/Camera2D/HUD/DiedLabel.visible = true
+	
+func _on_stage_two_cleared():
+	$Player/Camera2D/HUD/WinLabel.visible = true
+	

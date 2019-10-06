@@ -33,6 +33,7 @@ visible = false
 
 [node name="ExplosivePickup" parent="." instance=ExtResource( 8 )]
 visible = false
+[connection signal="died" from="Player" to="." method="_on_Player_died"]
 [connection signal="picked_up" from="WeaponPickup" to="." method="_on_WeaponPickup_picked_up"]
 [connection signal="picked_up" from="GunPickup" to="." method="_on_GunPickup_picked_up"]
 [connection signal="picked_up" from="DeflectPickup" to="." method="_on_DeflectPickup_picked_up"]

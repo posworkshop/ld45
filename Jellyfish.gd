@@ -13,7 +13,7 @@ var attack_state = "idle"
 
 
 func _ready():
-	health = 2
+	health = 4
 	connect("got_hit", self, "_ouch")
 
 

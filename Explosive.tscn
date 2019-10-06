@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/explosive2.png" type="Texture" id=2]
 [ext_resource path="res://assets/explosion.png" type="Texture" id=3]
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 
 
@@ -28,7 +28,7 @@ func _on_Area2D_body_entered(body):
 	body.hit()
 "
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 1 ), ExtResource( 2 ) ],
 "loop": true,
@@ -36,15 +36,15 @@ animations = [ {
 "speed": 2.0
 } ]
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=3]
 min_value = -348.05
 max_value = 133.37
 _data = [ Vector2( 0, 4.40002 ), 0.0, 489.355, 0, 0, Vector2( 0.305479, 36.08 ), 0.0, 0.0, 0, 0, Vector2( 0.675696, 46.233 ), -63.2956, -63.2956, 0, 0, Vector2( 1, -165.592 ), -1430.94, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="ParticlesMaterial" id=5]
 emission_shape = 2
 emission_box_extents = Vector3( 1, 1, 1 )
 flag_disable_z = true
@@ -54,13 +54,13 @@ initial_velocity = 200.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 linear_accel = -10.0
-linear_accel_curve = SubResource( 5 )
+linear_accel_curve = SubResource( 4 )
 scale = 4.0
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=6]
 radius = 90.0
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 resource_name = "Explode"
 length = 0.5
 tracks/0/type = "value"
@@ -90,14 +90,15 @@ tracks/1/keys = {
 
 [node name="Explosive" type="Node2D"]
 position = Vector2( 241.785, 114.476 )
-script = SubResource( 7 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 2, 2 )
-frames = SubResource( 1 )
+frames = SubResource( 2 )
+frame = 1
 playing = true
 
 [node name="Particles2D" type="Particles2D" parent="."]
@@ -107,7 +108,7 @@ amount = 80
 one_shot = true
 speed_scale = 3.0
 explosiveness = 0.5
-process_material = SubResource( 6 )
+process_material = SubResource( 5 )
 texture = ExtResource( 3 )
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -115,14 +116,14 @@ collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 3 )
+shape = SubResource( 6 )
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Explode = SubResource( 8 )
+anims/Explode = SubResource( 7 )
 
 [node name="ExplodeTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 1.5
 
 [node name="DequTimer" type="Timer" parent="."]
 wait_time = 0.8

@@ -14,7 +14,7 @@ var attack_state = "idle"
 var ink_bullet_scene  = preload("res://InkBullet.tscn")
 
 func _ready():
-	health = 2
+	health = 4
 	connect("got_hit", self, "_ouch")
 
 

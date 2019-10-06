@@ -6,14 +6,14 @@ signal died
 var health
 
 var target
-var speed = 300
+var speed = 230
 var attack_range = 80
 var attack_range_buffer = 0.9 # attack_range is the max range, 
 var attack_state = "idle"
 
 
 func _ready():
-	health = 2
+	health = 4
 	connect("got_hit", self, "_ouch")
 
 
