@@ -106,7 +106,8 @@ collision signal used to see if "self" got hit and handle appropriately, should 
 
   World give item to player
 
-* TODO Camera work
+* DONE Camera work
+  CLOSED: [2019-10-06 Sun 12:39]
   
   starting zone should fit in one screen, really just need to worry about the later stages
   
